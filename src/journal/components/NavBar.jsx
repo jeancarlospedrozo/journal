@@ -31,7 +31,7 @@ export const NavBar = ({ drawerWidth }) => {
   }));
 
   return (
-    <AppBar position="absolute" open>
+    <AppBar position="fixed" open>
       <Toolbar
         sx={{
           pr: "24px", // keep right padding when drawer closed
