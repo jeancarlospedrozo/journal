@@ -2,7 +2,7 @@ import { Google } from "@mui/icons-material";
 import { Button, Grid, Link, TextField, Typography } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import { checkingCredentials } from "../../store/auth/authSlice";
 import {
@@ -12,6 +12,7 @@ import {
 import { AuthLayout } from "../layout/AuthLayout";
 
 export const Login = () => {
+  const { status } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
   return (
@@ -29,7 +30,6 @@ export const Login = () => {
           <Field
             as={TextField}
             margin="normal"
-            required
             fullWidth
             id="email"
             label="Email Address"
@@ -40,7 +40,6 @@ export const Login = () => {
           <Field
             as={TextField}
             margin="normal"
-            required
             fullWidth
             name="password"
             label="Password"
@@ -55,6 +54,7 @@ export const Login = () => {
                 fullWidth
                 variant="contained"
                 onClick={() => dispatch(checkingAuthentication())}
+                disabled={status === "checking"}
               >
                 Sign In
               </Button>
@@ -65,6 +65,7 @@ export const Login = () => {
                 fullWidth
                 variant="contained"
                 onClick={() => dispatch(startGoogleSingIn())}
+                disabled={status === "checking"}
               >
                 <Google />
                 <Typography sx={{ ml: 1 }}>Google</Typography>
