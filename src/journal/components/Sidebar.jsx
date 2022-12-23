@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import MuiDrawer from "@mui/material/Drawer";
@@ -14,8 +15,10 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import React from "react";
+import { useSelector } from "react-redux";
 
 export const Sidebar = ({ drawerWidth }) => {
+  const getInfo = useSelector((state) => state.auth);
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
@@ -52,6 +55,7 @@ export const Sidebar = ({ drawerWidth }) => {
           px: [1],
         }}
       >
+        <Typography>{getInfo.displayName}</Typography>
         <IconButton>
           <ChevronLeftIcon />
         </IconButton>

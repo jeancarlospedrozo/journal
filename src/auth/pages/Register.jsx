@@ -1,14 +1,16 @@
-import { Button, Grid, Link, TextField } from "@mui/material";
+import { Alert, Button, Grid, Link, TextField } from "@mui/material";
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 import { AuthLayout } from "../layout/AuthLayout";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createUserEmail } from "../../store/auth/thunks";
 
 export const Register = () => {
+  const { status, errorMessage } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   return (
     <AuthLayout title="Register">
       <Formik
@@ -68,8 +70,18 @@ export const Register = () => {
               helperText={touched.password && errors.password}
             />
             <Grid container spacing={2} sx={{ mt: 1, mb: 2 }}>
+              {/* {status === "not-authenticated" && ( */}
+              <Grid item xs={12} display={!!errorMessage ? "" : "none"}>
+                <Alert severity="error">{errorMessage}</Alert>
+              </Grid>
+              {/* )} */}
               <Grid item xs={12}>
-                <Button type="submit" fullWidth variant="contained">
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  disabled={status === "checking"}
+                >
                   Sign Up
                 </Button>
               </Grid>

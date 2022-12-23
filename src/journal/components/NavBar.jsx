@@ -4,13 +4,20 @@ import MuiAppBar from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import React from "react";
 import { LogoutOutlined } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { logoutSession } from "../../store/auth/thunks";
 
 export const NavBar = ({ drawerWidth }) => {
+  const dispatch = useDispatch();
   // const [open, setOpen] = React.useState(true);
 
   // const toggleDrawer = () => {
   //   setOpen(!open);
   // };
+
+  const handleLogout = () => {
+    dispatch(logoutSession());
+  };
 
   const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -58,7 +65,7 @@ export const NavBar = ({ drawerWidth }) => {
         >
           Dashboard
         </Typography>
-        <IconButton color="inherit">
+        <IconButton color="inherit" onClick={handleLogout}>
           <LogoutOutlined />
         </IconButton>
       </Toolbar>
