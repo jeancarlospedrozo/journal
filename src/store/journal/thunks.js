@@ -1,10 +1,10 @@
 import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { firebaseDB } from "../../firebase/config";
-import { addNewNote } from "./journalSlice";
+import { addNewNote, createNote, setActiveNote } from "./journalSlice";
 
 export const startNewNote = () => {
   return async (dispatch, getState) => {
-    // console.log("🚀 ~ file: thunks.js:7 ~ return ~ getState", getState());
+    dispatch(createNote());
     const { uid } = getState().auth;
 
     const newNote = {
@@ -18,6 +18,9 @@ export const startNewNote = () => {
 
     await setDoc(newDoc, newNote);
 
-    // dispatch(addNewNote());
+    newNote.id = newDoc.id;
+
+    dispatch(addNewNote(newNote));
+    dispatch(setActiveNote(newNote));
   };
 };
