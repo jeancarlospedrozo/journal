@@ -1,6 +1,7 @@
 import { collection, doc, setDoc } from "firebase/firestore/lite";
 import { firebaseDB } from "../../firebase/config";
-import { addNewNote, createNote, setActiveNote } from "./journalSlice";
+import { loadNotes } from "../../helpers";
+import { addNewNote, createNote, saveNotes, setActiveNote } from "./journalSlice";
 
 export const startNewNote = () => {
   return async (dispatch, getState) => {
@@ -14,7 +15,6 @@ export const startNewNote = () => {
     };
 
     const newDoc = doc(collection(firebaseDB, `${uid}/journal/notas`));
-    console.log("🚀 ~ file: thunks.js:9 ~ startNewNote ~ newDoc", newDoc);
 
     await setDoc(newDoc, newNote);
 
@@ -22,5 +22,15 @@ export const startNewNote = () => {
 
     dispatch(addNewNote(newNote));
     dispatch(setActiveNote(newNote));
+  };
+};
+
+export const startLoadingNotes = () => {
+  return async (dispatch, getState) => {
+    const { uid } = getState().auth;
+
+    const notes = await loadNotes(uid);
+
+    dispatch(saveNotes(notes))
   };
 };

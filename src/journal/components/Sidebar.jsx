@@ -1,5 +1,6 @@
 import {
   Divider,
+  Grid,
   IconButton,
   List,
   ListItem,
@@ -19,6 +20,8 @@ import { useSelector } from "react-redux";
 
 export const Sidebar = ({ drawerWidth }) => {
   const getInfo = useSelector((state) => state.auth);
+  const { notes } = useSelector((state) => state.journal);
+
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
   })(({ theme, open }) => ({
@@ -62,13 +65,16 @@ export const Sidebar = ({ drawerWidth }) => {
       </Toolbar>
       <Divider />
       <List component="nav">
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
+        {notes.map((note, index) => (
+          <ListItem key={note.id} disablePadding>
             <ListItemButton>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <Grid container>
+                <ListItemText primary={note.title} />
+                <ListItemText secondary="Lorem ipsum" />
+              </Grid>
             </ListItemButton>
           </ListItem>
         ))}

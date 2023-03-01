@@ -22,7 +22,9 @@ export const journalSlice = createSlice({
       state.active = action.payload;
     },
     loadNotes: (state, action) => {},
-    saveNotes: (state, action) => {},
+    saveNotes: (state, action) => {
+      state.notes = action.payload
+    },
     updateNote: (state, action) => {},
     deleteNote: (state, action) => {},
   },
