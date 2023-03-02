@@ -16,11 +16,18 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setActiveNote } from "../../store/journal/journalSlice";
 
 export const Sidebar = ({ drawerWidth }) => {
+  const dispatch = useDispatch();
+
   const getInfo = useSelector((state) => state.auth);
   const { notes } = useSelector((state) => state.journal);
+
+  const handleClick = (note) => {
+    dispatch(setActiveNote({ ...note, title: note.title, body: note.body }));
+  };
 
   const Drawer = styled(MuiDrawer, {
     shouldForwardProp: (prop) => prop !== "open",
@@ -67,7 +74,7 @@ export const Sidebar = ({ drawerWidth }) => {
       <List component="nav">
         {notes.map((note, index) => (
           <ListItem key={note.id} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleClick(note)}>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
               </ListItemIcon>
