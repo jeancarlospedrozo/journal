@@ -24,9 +24,13 @@ export const Sidebar = ({ drawerWidth }) => {
 
   const getInfo = useSelector((state) => state.auth);
   const { notes } = useSelector((state) => state.journal);
+  const imageUrls = []
 
   const handleClick = (note) => {
-    dispatch(setActiveNote({ ...note, title: note.title, body: note.body }));
+    dispatch(setActiveNote({ ...note, title: note.title, body: note.body, id: note.id, date: note.date, imageUrls: imageUrls }));
+    // dispatch(
+    //   setActiveNote({ title: note.title, body: note.body, id: note.id, date: note.date, imageUrls: imageUrls})
+    // );
   };
 
   const Drawer = styled(MuiDrawer, {

@@ -23,9 +23,20 @@ export const journalSlice = createSlice({
     },
     loadNotes: (state, action) => {},
     saveNotes: (state, action) => {
-      state.notes = action.payload
+      state.notes = action.payload;
     },
-    updateNote: (state, action) => {},
+    setSaving: (state) => {
+      state.isSave = true;
+    },
+    updateNote: (state, action) => {
+      state.isSave = false
+      state.notes = state.notes.map(note => {
+        if (note.id === action.payload.id) {
+          return action.payload
+        }
+        return note
+      })
+    },
     deleteNote: (state, action) => {},
   },
 });
@@ -37,6 +48,7 @@ export const {
   loadNotes,
   saveNotes,
   setActiveNote,
+  setSaving,
   updateNote,
 } = journalSlice.actions;
 export default journalSlice.reducer;
